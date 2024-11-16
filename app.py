@@ -4,18 +4,18 @@ from flask_socketio import SocketIO, emit
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-# Variable to hold the current image state
-current_image = "image1.jpg"
+current_image = "happy_meep.jpg"  # current image state
+controller_sid = None             # track controller WH
 
 
 @app.route('/')
 def index():
-    return render_template('teacher.html')
+    return render_template('controller.html')
 
 
 @app.route('/viewer')
 def viewer():
-    return render_template('student.html')
+    return render_template('client.html')
 
 # SocketIO event to handle image change
 @socketio.on('change_image')
