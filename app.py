@@ -10,13 +10,12 @@ current_image = "image1.jpg"
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('teacher.html')
 
 
 @app.route('/viewer')
 def viewer():
-    return render_template('viewer.html')
-
+    return render_template('student.html')
 
 # SocketIO event to handle image change
 @socketio.on('change_image')

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Three.js Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r141/three.min.js"></script>
+</head>
+<body>
+    <h1>Three.js Image Viewer</h1>
+    <button onclick="changeImage('image1.jpg')">Image 1</button>
+    <button onclick="changeImage('image2.jpg')">Image 2</button>
+    <div id="three-container" style="width: 100%; height: 500px;"></div>
+
+    <script>
+        const socket = io();
+        let scene, camera, renderer, texture;
+
+        // Initialize Three.js Scene
+        function init() {
+            const container = document.getElementById('three-container');
+
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            // Create a plane with an initial texture
+            const geometry = new THREE.PlaneGeometry(5, 3);
+            texture = new THREE.TextureLoader().load(`/static/image1.jpg`);
+            const material = new THREE.MeshBasicMaterial({ map: texture });
+            const plane = new THREE.Mesh(geometry, material);
+            scene.add(plane);
+
+            camera.position.z = 5;
+            animate();
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        // Change image when a button is clicked
+        function changeImage(image) {
+            socket.emit('change_image', { image: image });
+        }
+
+        // Listen for server updates to change texture
+        socket.on('update_image', (data) => {
+            texture.image.src = `/static/${data.image}`;
+            texture.needsUpdate = true; // Notify Three.js to re-render the texture
+        });
+
+        // Initialize the scene
+        init();
+    </script>
+</body>
+</html>
