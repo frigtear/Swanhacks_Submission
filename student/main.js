@@ -7,20 +7,20 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-const geometry = new THREE.CircleGeometry(2);
+const geometry = new THREE.SphereGeometry(2);
 const green = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-const circle = new THREE.Mesh( geometry, green );
-scene.add( circle );
+const sphere = new THREE.Mesh( geometry, green );
+scene.add( sphere );
 
 
-const g2 = new THREE.CircleGeometry(0.25);
+const g2 = new THREE.SphereGeometry(0.25);
 const blue = new THREE.MeshBasicMaterial( {color: 0x0000ff});
 const eye = new THREE.Mesh(g2, blue);
 const eye2 = new THREE.Mesh(g2, blue);
 scene.add(eye);
 scene.add(eye2);
 
-const g3 = new THREE.CircleGeometry(0.5, 32, Math.PI, Math.PI);
+const g3 = new THREE.SphereGeometry(0.5, 32, 16, 0, Math.PI*2, Math.PI/2, Math.PI);
 const red = new THREE.MeshBasicMaterial( {color: 0xff0000});
 const mouth = new THREE.Mesh(g3, red)
 scene.add(mouth)
