@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Controller</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
+</head>
+<body>
+    <h1>Controller</h1>
+    <button onclick="changeImage('image1.jpg')">Image 1</button>
+    <button onclick="changeImage('image2.jpg')">Image 2</button>
+
+    <script>
+        const socket = io();
+
+        function changeImage(image) {
+            socket.emit('change_image', { image: image });
+        }
+    </script>
+</body>
+</html>
