@@ -9,12 +9,12 @@ controller_sid = None             # track controller WH
 
 
 @app.route('/')
-def index():
+def controller():
     return render_template('controller.html')
 
 
-@app.route('/viewer')
-def viewer():
+@app.route('/client')
+def client():
     return render_template('client.html')
 
 # SocketIO event to handle image change
