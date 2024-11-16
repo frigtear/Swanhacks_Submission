@@ -15,6 +15,11 @@ scene.add( cube );
 camera.position.z = 5;
 
 function animate() {
+
+	cube.rotation.z += 0.01
+	cube.rotation.y += 0.01
 	renderer.render( scene, camera );
+	
 }
+
 renderer.setAnimationLoop( animate );
