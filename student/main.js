@@ -12,7 +12,6 @@ const green = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 const sphere = new THREE.Mesh( geometry, green );
 scene.add( sphere );
 
-
 const g2 = new THREE.SphereGeometry(0.25);
 const blue = new THREE.MeshBasicMaterial( {color: 0x0000ff});
 const eye = new THREE.Mesh(g2, blue);
@@ -20,14 +19,26 @@ const eye2 = new THREE.Mesh(g2, blue);
 scene.add(eye);
 scene.add(eye2);
 
-const g3 = new THREE.SphereGeometry(0.5, 32, 16, 0, Math.PI*2, Math.PI/2, Math.PI);
+const straight_mouth = new THREE.BoxGeometry(1.3, 0.1, 0.1);
 const red = new THREE.MeshBasicMaterial( {color: 0xff0000});
-const mouth = new THREE.Mesh(g3, red)
-scene.add(mouth)
+const smile_mouth = new THREE.SphereGeometry(0.5, 32, 16, 0, Math.PI*2, Math.PI/2, Math.PI);
+const frown_mouth = new THREE.SphereGeometry(-0.5, -32, -16, 0, Math.PI*2, Math.PI/2, Math.PI);
+const mouth = new THREE.Mesh(straight_mouth, red);
+scene.add(mouth);
+
+const g3 = new THREE.SphereGeometry(1.5);
+const hat = new THREE.Mesh(g3,red);queueMicrotask
+scene.add(hat);
+
+const g4 = new THREE.BoxGeometry(5, 0.1, 0.1);
+const hat_brim = new THREE.Mesh(g4,red);queueMicrotask
+scene.add(hat_brim);
 
 moveTo(eye, 0.5, 0.7, 2);
 moveTo(eye2, -0.5, 0.7, 2);
-moveTo(mouth, 0, 0.2, 2);
+moveTo(mouth, 0, 0, 2);
+moveTo(hat, 0, 1.1, 0);
+moveTo(hat_brim, 0, 1.5, 0);
 
 function moveTo(obj, x, y, z) {
 	obj.position.x = x
@@ -38,9 +49,19 @@ function moveTo(obj, x, y, z) {
 camera.position.z = 5;
 
 function animate() {
-
 	renderer.render( scene, camera );
-	
 }
 
-renderer.setAnimationLoop( animate );
+function addLighting(scene) {
+    let color = 0xFFFFFF;
+    let intensity = 1;
+    let light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(0, 2, 0);
+    light.target.position.set(-2, 0, -2);
+    scene.add(light);
+    scene.add(light.target);
+  }
+
+  addLighting(scene);
+
+renderer.setAnimationLoop( animate, addLighting );
