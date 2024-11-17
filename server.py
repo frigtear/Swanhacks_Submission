@@ -49,7 +49,7 @@ async def handle_connection(socket):
                 print(f"forwarded {message} to {student_name}")
 
             if type == "Student_Request":
-                await socket.send(json.dumps(identified_connections.keys()))
+                await socket.send(json.dumps(list(identified_connections.keys())))
                 print(f"sent list of connected students")
 
     except websockets.ConnectionClosed:
