@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Student Pet</title>
-		<style>
-			body { margin: 0; }
-		</style>
-	</head>
-	<body>
-		<input type="text" id="nameButton" placeholder="Type student name here."/>
-		<input type="button" id="connectButton" value="Connect"/>
+<head>
+    <meta charset="utf-8">
+    <title>Student Pet</title>
+    <style>
+        body { margin: 0; }
+        #displayName {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="nameButton" placeholder="Type student name here." />
+    <input type="button" id="connectButton" value="Connect" />
+    <div id="displayName"></div>
 
-		<script type="module">
-			import { storeInput } from '../static/student.js';
+    <script type="module">
+        import { storeInput } from './main.js';
 
-			document.getElementById('connectButton').addEventListener('click', storeInput);
-		</script>
-		<script type="module" src="../static/student.js"></script>
-	</body>
+        document.getElementById('connectButton').addEventListener('click', storeInput);
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
 </html>
