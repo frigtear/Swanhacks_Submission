@@ -43,7 +43,7 @@ async def handle_connection(socket):
 
                 print(f"identified connection: {name}")
 
-            if type == "Order" and message["Student"] in identified_connections and socket == teacher_connection:
+            if type == "Order" and message["Student"] in identified_connections:
                 student_name = message["Student"]
                 async with lock:
                     await identified_connections[student_name].send(json.dumps(message))
