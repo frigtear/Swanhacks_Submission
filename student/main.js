@@ -54,7 +54,7 @@ class Client{
         if (action == "Kill_order"){
             die();
         }
-        else if (action == "Hat_Change"){
+        else if (action == "Hat_change"){
             hatChange();
         }
     }
@@ -112,10 +112,13 @@ function moveTo(obj, x, y, z) {
 function hatChange() {
 	if (isHat) {
 		scene.remove(hat);
+		scene.remove(hat_brim);
 		isHat = false;
 	} else {
 		scene.add(hat);
+		scene.add(hat_brim);
 		moveTo(hat, 0, 1.1, 0);
+		moveTo(hat_brim, 0, 1.04, 2);
 		isHat = true;
 	}
 }
@@ -141,7 +144,7 @@ function die() {
 }
 
 camera.position.z = 5;
-//die();
+
 function animate() {
 	renderer.render( scene, camera );
 }
