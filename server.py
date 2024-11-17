@@ -69,7 +69,7 @@ async def main():
     ip = "localhost"
     if not dev_mode:
         ip = "0.0.0.0"
-    server = await websockets.serve(handle_connection, "ip", 8080)
+    server = await websockets.serve(handle_connection, ip, 8080)
     print(f"WebSocket server started on ws://{ip}")
     await server.wait_closed()
                 
