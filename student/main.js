@@ -2,6 +2,12 @@ import * as THREE from 'three';
 
 const server_address = "ws://3.147.205.233:80/"
 
+export function storeInput() {
+	let studentName = document.getElementById("nameButton").value;
+	Client.connect(server_address, studentName);
+	console.log("Connected Successfully!");
+}
+
 class Client{
     static socket = null
     static isConnected = null
@@ -48,13 +54,13 @@ class Client{
         if (action == "Kill_order"){
             die();
         }
-        else if (action == "change_hat"){
-            
+        else if (action == "Hat_Change"){
+            hatChange();
         }
     }
 }
 
-Client.connect(server_address, "Gerald")
+
 
 
 const scene = new THREE.Scene();
@@ -86,6 +92,7 @@ scene.add(mouth);
 const g3 = new THREE.SphereGeometry(1.5);
 const hat = new THREE.Mesh(g3,red);queueMicrotask
 scene.add(hat);
+let isHat = true
 
 const g4 = new THREE.BoxGeometry(2.5, 0.2, 0.1);
 const hat_brim = new THREE.Mesh(g4,red);queueMicrotask
@@ -101,6 +108,16 @@ function moveTo(obj, x, y, z) {
 	obj.position.x = x
 	obj.position.y = y
 	obj.position.z = z
+}
+function hatChange() {
+	if (isHat) {
+		scene.remove(hat);
+		isHat = false;
+	} else {
+		scene.add(hat);
+		moveTo(hat, 0, 1.1, 0);
+		isHat = true;
+	}
 }
 
 function die() {
