@@ -30,15 +30,15 @@ const g3 = new THREE.SphereGeometry(1.5);
 const hat = new THREE.Mesh(g3,red);queueMicrotask
 scene.add(hat);
 
-const g4 = new THREE.BoxGeometry(5, 0.1, 0.1);
+const g4 = new THREE.BoxGeometry(2.5, 0.2, 0.1);
 const hat_brim = new THREE.Mesh(g4,red);queueMicrotask
 scene.add(hat_brim);
 
-moveTo(eye, 0.5, 0.7, 2);
-moveTo(eye2, -0.5, 0.7, 2);
-moveTo(mouth, 0, 0, 2);
+moveTo(eye, 0.5, 0.4, 2);
+moveTo(eye2, -0.5, 0.4, 2);
+moveTo(mouth, 0, -0.5, 2);
 moveTo(hat, 0, 1.1, 0);
-moveTo(hat_brim, 0, 1.5, 0);
+moveTo(hat_brim, 0, 1.04, 2);
 
 function moveTo(obj, x, y, z) {
 	obj.position.x = x
