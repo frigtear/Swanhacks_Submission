@@ -1,5 +1,68 @@
 import * as THREE from 'three';
 
+const server_address = "ws://3.147.205.233:80/"
+
+export function storeInput() {
+	let studentName = document.getElementById("nameButton").value;
+	Client.connect(server_address, studentName);
+	console.log("Connected Successfully!");
+}
+
+class Client{
+    static socket = null
+    static isConnected = null
+
+    static async connect(server_address, student_name) {
+        return new Promise((resolve, reject) => {
+            this.socket = new WebSocket(server_address);
+
+            this.socket.onopen = () => {
+           
+                this.isConnected = true;
+
+                const identity = {
+                    "Type":"Identification",
+                    "Name":student_name
+                }
+
+                this.socket.send(JSON.stringify(identity))
+
+				console.log("Connected to server");
+                resolve();
+            };
+
+            this.socket.onerror = (error) => {
+                console.error("WebSocket error:", error);
+                this.isConnected = false;
+                reject(error);
+            };
+
+            this.socket.onclose = () => {
+                console.log("Connection closed");
+                this.isConnected = false;
+            };
+
+            this.socket.onmessage = async (event) =>{
+                const order = JSON.parse(event.data);
+                const action = order["Action"]
+                Client.execute_order(action)
+            }
+        });  
+    }
+
+    static execute_order(action){
+        if (action == "Kill_order"){
+            die();
+        }
+        else if (action == "Hat_change"){
+            hatChange();
+        }
+    }
+}
+
+
+
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
@@ -29,6 +92,7 @@ scene.add(mouth);
 const g3 = new THREE.SphereGeometry(1.5);
 const hat = new THREE.Mesh(g3,red);queueMicrotask
 scene.add(hat);
+let isHat = true
 
 const g4 = new THREE.BoxGeometry(2.5, 0.2, 0.1);
 const hat_brim = new THREE.Mesh(g4,red);queueMicrotask
@@ -44,6 +108,19 @@ function moveTo(obj, x, y, z) {
 	obj.position.x = x
 	obj.position.y = y
 	obj.position.z = z
+}
+function hatChange() {
+	if (isHat) {
+		scene.remove(hat);
+		scene.remove(hat_brim);
+		isHat = false;
+	} else {
+		scene.add(hat);
+		scene.add(hat_brim);
+		moveTo(hat, 0, 1.1, 0);
+		moveTo(hat_brim, 0, 1.04, 2);
+		isHat = true;
+	}
 }
 
 function die() {
@@ -67,7 +144,7 @@ function die() {
 }
 
 camera.position.z = 5;
-die();
+
 function animate() {
 	renderer.render( scene, camera );
 }
