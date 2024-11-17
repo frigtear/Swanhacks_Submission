@@ -1,0 +1,100 @@
+/* Main container grid */
+.main-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;  /* Two equal columns */
+    grid-template-rows: auto;       /* Auto row size */
+    gap: 10px;                      /* Gap between grid items */
+    width: 100%;                     /* Make sure the container takes the full width */
+    max-width: 120000px;               /* Limit the width for better alignment */
+    margin: 0 auto;                  /* Center the main container */
+}
+
+/* Dropdown container */
+.dropdown-container {
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;  /* Stack the list and selected text vertically */
+    justify-content: flex-start;  /* Align the content to the top */
+    align-items: flex-start;      /* Align to the left */
+    padding: 10px;
+    grid-column: 1;           /* First column */
+    width: 100%;              /* Ensure it takes full width of its grid column */
+}
+
+/* Gachi menu container (buttons) */
+.gachi-menu-container {
+    background-color: rgb(0, 248, 25);
+    display: flex;
+    flex-direction: column;  /* Stack the buttons vertically */
+    justify-content: center;  /* Center buttons vertically */
+    align-items: center;      /* Center buttons horizontally */
+    padding: 10px;
+    grid-column: 2;           /* Second column */
+                /* Ensure it takes full width of its grid column */
+}
+
+/* Unordered list for dropdown */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Make the list items inside the dropdown container centered */
+li {
+    display: flex;
+    justify-content: center;  /* Center the button inside list item */
+    padding: 5px;
+}
+
+button {
+    width: 100%;  /* Make the button fill the list item width */
+}
+
+/* Style for the buttons */
+.button-3 {
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.85);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.25;
+    margin: 0;
+    min-height: 3rem;
+    padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+}
+
+/* Hover and focus for the buttons */
+.button-6:hover,
+.button-6:focus {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.button-6:hover {
+    transform: translateY(-1px);
+}
+
+.button-6:active {
+    background-color: #F0F0F1;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    color: rgba(0, 0, 0, 0.65);
+    transform: translateY(0);
+}
