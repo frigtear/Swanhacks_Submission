@@ -16,7 +16,7 @@ async def handle_connection(socket):
     try:
         if teacher_connection is None:
             teacher_connection = socket
-            print(f"new teacher connection, address")
+            print(f"new teacher connection")
         else:
             print(f"New unidentified connection")
 
@@ -41,13 +41,16 @@ async def handle_connection(socket):
                 async with lock:
                     identified_connections[name] = socket 
 
-                print(f"identified connection: {name}")
+                print(f"identified connection: {name}, address:")
 
-            if type == "Order" and message["Student"] in identified_connections:
+            if type == "Order" and message["Student"] in identified_connections and socket == teacher_connection:
                 student_name = message["Student"]
-                async with lock:
-                    await identified_connections[student_name].send(json.dumps(message))
+                await identified_connections[student_name].send(json.dumps(message))
                 print(f"forwarded {message} to {student_name}")
+
+            if type == "Student_Request":
+                await socket.send(json.dumps(identified_connections.keys()))
+                print(f"sent list of connected students")
 
     except websockets.ConnectionClosed:
 
