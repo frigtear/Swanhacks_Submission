@@ -1,5 +1,62 @@
 import * as THREE from 'three';
 
+const server_address = "ws://3.147.205.233:80/"
+
+class Client{
+    static socket = null
+    static isConnected = null
+
+    static async connect(server_address, student_name) {
+        return new Promise((resolve, reject) => {
+            this.socket = new WebSocket(server_address);
+
+            this.socket.onopen = () => {
+           
+                this.isConnected = true;
+
+                const identity = {
+                    "Type":"Identification",
+                    "Name":student_name
+                }
+
+                this.socket.send(JSON.stringify(identity))
+
+				console.log("Connected to server");
+                resolve();
+            };
+
+            this.socket.onerror = (error) => {
+                console.error("WebSocket error:", error);
+                this.isConnected = false;
+                reject(error);
+            };
+
+            this.socket.onclose = () => {
+                console.log("Connection closed");
+                this.isConnected = false;
+            };
+
+            this.socket.onmessage = async (event) =>{
+                const order = JSON.parse(event.data);
+                const action = order["Action"]
+                Client.execute_order(action)
+            }
+        });  
+    }
+
+    static execute_order(action){
+        if (action == "Kill_order"){
+            die();
+        }
+        else if (action == "change_hat"){
+            
+        }
+    }
+}
+
+Client.connect(server_address, "Gerald")
+
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
@@ -67,7 +124,7 @@ function die() {
 }
 
 camera.position.z = 5;
-die();
+//die();
 function animate() {
 	renderer.render( scene, camera );
 }
