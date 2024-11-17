@@ -2,6 +2,8 @@ import asyncio
 import websockets
 import json
 
+dev_mode = False
+
 unknown_connections = dict()
 identified_connections = dict()
 teacher_connection = None
@@ -64,8 +66,11 @@ async def handle_connection(socket, address):
     
 
 async def main():
-    server = await websockets.serve(handle_connection, "localhost", 8765)
-    print("WebSocket server started on ws://localhost:8765")
+    ip = "localhost"
+    if not dev_mode:
+        ip = "0.0.0.0"
+    server = await websockets.serve(handle_connection, "0.0.0.0", 8080)
+    print(f"WebSocket server started on ws://{ip}")
     await server.wait_closed()
                 
 
