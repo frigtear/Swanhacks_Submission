@@ -1,4 +1,7 @@
 Bun.serve({
+
+  port:3001,
+
   async fetch(req) {
     const url = new URL(req.url);
 

@@ -18,6 +18,7 @@
             
         <div x-data="data_context()"> 
             <div class = "dropdown-container">
+                
                 <ul>
                     <template x-for="student in students" :key="student.Id">
                         <li @click="selected = student">
@@ -30,9 +31,10 @@
         
             
             <div class="gachi-menu-container"> 
-                <button class="button-6" @click="change_hat(selected)" :disabled="selected.isLoading">  <p x-text="selected.hat_button_text"> </p> </button>
-                <button class="button-6" @click="kill_pet(selected)" :disabled="selected.isLoading"> <p x-text="selected.kill_text"> </p></button>
+                <button class="button-6" @click="change_hat(selected)" :disabled="selected.isLoading || !selected.is_alive">  <p x-text="selected.hat_button_text"> </p> </button>
+                <button class="button-6" @click="kill_pet(selected)" :disabled="selected.isLoading || !selected.is_alive"> <p x-text="selected.kill_text"> </p></button>
             </div>
+
         </div>
 
     </div>
