@@ -10,19 +10,19 @@ teacher_connection = None
 
 lock = asyncio.Lock()
 
-async def handle_connection(socket, address):
+async def handle_connection(socket, path):
     global teacher_connection, unknown_connections, identified_connections
 
     try:
         if teacher_connection is None:
             teacher_connection = socket
-            print(f"new teacher connection, address: {address}")
+            print(f"new teacher connection, address: {path}")
         else:
-            print(f"New unidentified connection {address}")
+            print(f"New unidentified connection {path}")
 
         async for message in socket:
 
-            print(f"recieved {message} from {address}")
+            print(f"recieved {message} from {path}")
 
             try:
                 message = json.loads(message)
@@ -41,7 +41,7 @@ async def handle_connection(socket, address):
                 async with lock:
                     identified_connections[name] = socket 
 
-                print(f"identified connection: {name}, address: {address}")
+                print(f"identified connection: {name}, address: {path}")
 
             if type == "Order" and message["Student"] in identified_connections and socket == teacher_connection:
                 student_name = message["Student"]
