@@ -1,15 +1,34 @@
 import * as THREE from 'three';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+
 
 const server_address = "ws://3.147.205.233:80/"
 
 export function storeInput() {
     const studentName = document.getElementById("nameButton").value;
     if (studentName.trim() === '') {
-        alert('Please type a name!'); 
+        alert('Please type a name!'); // Alert if the input is empty
         return;
     }
-    const displayArea = document.getElementById('displayName'); 
-    displayArea.textContent = `Hello, ${studentName}!`;
+    
+    const displayArea = document.getElementById('displayName'); // Locate the display element
+    displayArea.textContent = `Hello, ${studentName}!`; // Update the text dynamically
+
+    // Load font and add name to the scene
+    const fontLoader = new FontLoader();
+    fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
+        const textGeometry = new TextGeometry(studentName, {
+            font: font,
+            size: 0.5,
+            height: 0.2,
+        });
+        const textMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+        const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+        textMesh.position.set(-0.65, -1.3, 2.5); // Adjust the position as needed
+        scene.add(textMesh);
+    });
+
     Client.connect(server_address, studentName)
         .then(() => {
             console.log("Connected Successfully!");
