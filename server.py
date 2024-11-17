@@ -23,7 +23,7 @@ async def handle_connection(socket):
         async for message in socket:
 
             print(f"recieved {message}")
-            print("identified, students" ,identified_connections)
+            print(f"ACTIVE_CONNECTIONS: {list(identified_connections.keys())}")
 
             try:
                 message = json.loads(message)
