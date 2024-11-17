@@ -3,10 +3,22 @@ import * as THREE from 'three';
 const server_address = "ws://3.147.205.233:80/"
 
 export function storeInput() {
-	let studentName = document.getElementById("nameButton").value;
-	Client.connect(server_address, studentName);
-	console.log("Connected Successfully!");
+    const studentName = document.getElementById("nameButton").value;
+    if (studentName.trim() === '') {
+        alert('Please type a name!'); 
+        return;
+    }
+    const displayArea = document.getElementById('displayName'); 
+    displayArea.textContent = `Hello, ${studentName}!`;
+    Client.connect(server_address, studentName)
+        .then(() => {
+            console.log("Connected Successfully!");
+        })
+        .catch((error) => {
+            console.error("Failed to connect:", error);
+        });
 }
+
 
 class Client{
     static socket = null
